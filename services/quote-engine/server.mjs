@@ -30,7 +30,7 @@ const cluster = process.env.SOLANA_CLUSTER || "devnet";
 const rpcHttpEndpoint = process.env.SOLANA_RPC_HTTP || clusterApiUrl(cluster);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dataDir = process.env.DATA_DIR || path.join(__dirname, ".data");
-const dbPath = process.env.SQLITE_PATH || path.join(dataDir, "borderops.sqlite");
+const dbPath = process.env.SQLITE_PATH || path.join(dataDir, "solana-crossboarder-transaction-devnet-demo.sqlite");
 const treasuryPath = path.join(dataDir, "devnet-treasury.json");
 const mintPath = path.join(dataDir, "devnet-stablecoin-mint.json");
 const allowedOrigins = (process.env.ALLOWED_ORIGINS || "")
@@ -985,5 +985,5 @@ const server = http.createServer(async (request, response) => {
 });
 
 server.listen(port, host, () => {
-  console.log(`BorderOps quote API listening on http://${host}:${port} (cluster=${cluster})`);
+  console.log(`Solana-CrossBorder-Transaction-Devnet-Demo quote API listening on http://${host}:${port} (cluster=${cluster})`);
 });

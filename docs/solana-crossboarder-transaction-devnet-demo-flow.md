@@ -1,7 +1,7 @@
-# BorderOps Flow
+# Solana-CrossBorder-Transaction-Devnet-Demo Flow
 
 ## Product thesis
-BorderOps is a cross-border payout operating system for companies that earn in one market and pay contractors, suppliers, or partner networks in another. The product wedge is not "move stablecoins." The wedge is to keep the payment packet, the policy, the approvals, and the settlement proof attached to the same workflow.
+Solana-CrossBorder-Transaction-Devnet-Demo is a cross-border payout operating system for companies that earn in one market and pay contractors, suppliers, or partner networks in another. The product wedge is not "move stablecoins." The wedge is to keep the payment packet, the policy, the approvals, and the settlement proof attached to the same workflow.
 
 ## The flow
 

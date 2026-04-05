@@ -1,4 +1,4 @@
-# BorderOps MVP Plan
+# Solana-CrossBorder-Transaction-Devnet-Demo MVP Plan
 
 ## Goal
 Ship an MVP that proves one thing well: a finance or ops team can turn a cross-border payout request

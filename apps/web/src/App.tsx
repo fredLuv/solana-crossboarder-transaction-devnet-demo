@@ -48,7 +48,7 @@ type StoredDemoWallet = {
   secretKey: number[];
 };
 
-const DEMO_WALLET_STORAGE_KEY = "borderops.demoWallet";
+const DEMO_WALLET_STORAGE_KEY = "solana-crossboarder-transaction-devnet-demo.demoWallet";
 const demoConnection = new Connection(clusterApiUrl("devnet"), "confirmed");
 const memoProgramId = new PublicKey("MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr");
 const stablecoinSymbol = "dUSDC";
@@ -278,7 +278,7 @@ function ReceiptView({
     <div className="receiptPage">
       <div className="receiptPageHeader">
         <div>
-          <p className="eyebrow">BorderOps Receipt</p>
+          <p className="eyebrow">Solana-CrossBorder-Transaction-Devnet-Demo Receipt</p>
           <h1 className="receiptTitle">
             {localDeliveryPending ? "Cross-border payout released." : "Cross-border payout delivered."}
           </h1>
@@ -700,7 +700,7 @@ export default function App() {
       const sourceAta = getAssociatedTokenAddressSync(mintAddress, demoWallet.publicKey);
       const beneficiaryOwner = new PublicKey(active.beneficiaryAddress);
       const beneficiaryAta = getAssociatedTokenAddressSync(mintAddress, beneficiaryOwner);
-      const memo = `BorderOps:${active.id}:${active.memoReference}`;
+      const memo = `Solana-CrossBorder-Transaction-Devnet-Demo:${active.id}:${active.memoReference}`;
       const beneficiaryAtaInfo = await demoConnection.getAccountInfo(beneficiaryAta, "confirmed");
       const instructions = [];
 
@@ -820,7 +820,7 @@ export default function App() {
         <div className="panelHeader">
           <h2>Loading payout case</h2>
             </div>
-            <p className="lede">BorderOps is loading the active payout, devnet rail, and the latest stored settlement state.</p>
+            <p className="lede">Solana-CrossBorder-Transaction-Devnet-Demo is loading the active payout, devnet rail, and the latest stored settlement state.</p>
           </section>
         </main>
       </div>
@@ -861,7 +861,7 @@ export default function App() {
     <div className="shell">
       <header className="hero simplifiedHero">
         <div>
-          <p className="eyebrow">BorderOps · Solana Devnet</p>
+          <p className="eyebrow">Solana-CrossBorder-Transaction-Devnet-Demo · Solana Devnet</p>
           <h1>Run one real US to Argentina contractor payout.</h1>
           <p className="lede">
             This demo follows the actual job: confirm the recipient rail, fund in stablecoins, release on Solana,
