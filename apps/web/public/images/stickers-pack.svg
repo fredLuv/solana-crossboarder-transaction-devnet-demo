@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-label="Blink Sticker Pack product shot">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e8fff7"/>
+      <stop offset="100%" stop-color="#90d8c7"/>
+    </linearGradient>
+    <linearGradient id="foil" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="35%" stop-color="#d7f3ff"/>
+      <stop offset="70%" stop-color="#ffd8f3"/>
+      <stop offset="100%" stop-color="#fff6ce"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="420" fill="url(#bg)"/>
+  <rect x="96" y="96" width="448" height="244" rx="18" fill="#f8fffd" stroke="#c8efe3" stroke-width="4"/>
+  <rect x="145" y="132" width="120" height="170" rx="18" fill="url(#foil)" stroke="#ffffff" stroke-width="8"/>
+  <rect x="262" y="132" width="120" height="170" rx="18" fill="url(#foil)" stroke="#ffffff" stroke-width="8"/>
+  <rect x="379" y="132" width="120" height="170" rx="18" fill="url(#foil)" stroke="#ffffff" stroke-width="8"/>
+  <circle cx="205" cy="217" r="24" fill="#16b39b"/>
+  <polygon points="322,188 330,206 350,208 334,220 339,240 322,229 305,240 310,220 294,208 314,206" fill="#0f8dff"/>
+  <path d="M431 210h16v-16h14v16h16v14h-16v16h-14v-16h-16z" fill="#ff8a4e"/>
+</svg>

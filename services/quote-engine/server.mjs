@@ -603,6 +603,26 @@ function validateWalletFundingRequest(payload) {
   };
 }
 
+function validateSolFundingRequest(payload) {
+  const address = assertString(payload.address, "address");
+  const topUpSol = assertNumber(
+    typeof payload.topUpSol === "number" ? payload.topUpSol : 0.05,
+    "topUpSol",
+    { min: 0.001, max: 0.25 }
+  );
+
+  try {
+    new PublicKey(address);
+  } catch (_error) {
+    throw new Error("address must be a valid Solana public key.");
+  }
+
+  return {
+    address,
+    topUpSol
+  };
+}
+
 function validateStageUpdateRequest(payload) {
   const stage = assertString(payload.stage, "stage");
   const allowedStages = new Set([
@@ -800,16 +820,18 @@ async function fundStablecoinWallet(address, amountToken = 500, topUpSol = 0.02,
     );
   }
 
-  instructions.push(
-    createTransferCheckedInstruction(
-      treasuryAta,
-      mintAddress,
-      walletAta,
-      treasury.publicKey,
-      stablecoinUnits(amountToken),
-      stablecoinDecimals
-    )
-  );
+  if (amountToken > 0) {
+    instructions.push(
+      createTransferCheckedInstruction(
+        treasuryAta,
+        mintAddress,
+        walletAta,
+        treasury.publicKey,
+        stablecoinUnits(amountToken),
+        stablecoinDecimals
+      )
+    );
+  }
 
   const transaction = new Transaction().add(...instructions);
   const signature = await sendAndConfirmTransaction(connection, transaction, [treasury], {
@@ -836,6 +858,36 @@ async function fundStablecoinWallet(address, amountToken = 500, topUpSol = 0.02,
 
   recordFundingEvent(payoutId, result);
   return result;
+}
+
+async function fundSolWallet(address, topUpSol = 0.05) {
+  const treasury = await loadOrCreateTreasury();
+  await ensureTreasuryFunded(treasury);
+
+  const wallet = new PublicKey(address);
+  const transaction = new Transaction().add(
+    SystemProgram.transfer({
+      fromPubkey: treasury.publicKey,
+      toPubkey: wallet,
+      lamports: Math.round(topUpSol * LAMPORTS_PER_SOL)
+    })
+  );
+
+  const signature = await sendAndConfirmTransaction(connection, transaction, [treasury], {
+    commitment: "confirmed"
+  });
+
+  return {
+    ok: true,
+    cluster,
+    treasuryAddress: treasury.publicKey.toBase58(),
+    treasuryBalanceSol: await getBalanceSol(treasury.publicKey),
+    walletAddress: wallet.toBase58(),
+    walletBalanceSol: await getBalanceSol(wallet),
+    amountSol: topUpSol,
+    signature,
+    explorerUrl: `https://explorer.solana.com/tx/${signature}?cluster=${cluster}`
+  };
 }
 
 async function devnetStatus() {
@@ -928,6 +980,21 @@ const server = http.createServer(async (request, response) => {
       sendJson(request, response, statusCode, {
         ok: false,
         error: "Stablecoin wallet funding failed",
+        detail: error instanceof Error ? error.message : "unknown"
+      });
+    }
+    return;
+  }
+
+  if (request.method === "POST" && request.url === "/devnet/sol/fund") {
+    try {
+      const payload = validateSolFundingRequest(await readJsonBody(request));
+      sendJson(request, response, 200, await fundSolWallet(payload.address, payload.topUpSol));
+    } catch (error) {
+      const statusCode = error instanceof Error && error.message.includes("must") ? 400 : 500;
+      sendJson(request, response, statusCode, {
+        ok: false,
+        error: "Demo wallet SOL funding failed",
         detail: error instanceof Error ? error.message : "unknown"
       });
     }

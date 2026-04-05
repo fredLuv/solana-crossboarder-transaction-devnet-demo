@@ -59,6 +59,18 @@ export type DemoWalletFunding = {
   explorerUrl: string;
 };
 
+export type DemoWalletSolFunding = {
+  ok: boolean;
+  cluster: "devnet";
+  treasuryAddress: string;
+  treasuryBalanceSol: number;
+  walletAddress: string;
+  walletBalanceSol: number;
+  amountSol: number;
+  signature: string;
+  explorerUrl: string;
+};
+
 export type PersistedSettlementReceipt = {
   cluster: "devnet";
   signature: string;
@@ -164,6 +176,26 @@ export async function fundDemoWallet(
   }
 
   return (await response.json()) as DemoWalletFunding;
+}
+
+export async function fundDemoWalletSol(
+  address: string,
+  topUpSol = 0.05
+): Promise<DemoWalletSolFunding> {
+  const response = await fetch(`${appConfig.apiBaseUrl}/devnet/sol/fund`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ address, topUpSol })
+  });
+
+  if (!response.ok) {
+    const detail = await response.text();
+    throw new Error(`Demo wallet SOL funding failed: ${detail}`);
+  }
+
+  return (await response.json()) as DemoWalletSolFunding;
 }
 
 export async function persistPayoutStage(payoutId: string, stage: Stage, approvals: string[]): Promise<void> {

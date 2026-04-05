@@ -36,6 +36,48 @@ body {
     linear-gradient(180deg, #060814 0%, #090d1e 48%, #050816 100%);
 }
 
+.topNav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 28px;
+  background: rgba(5, 8, 22, 0.72);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.brandMark,
+.topNavLink {
+  background: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
+  color: var(--muted);
+  padding: 10px 14px;
+}
+
+.brandMark {
+  color: var(--ink);
+  font: 700 12px/1 "SF Mono", "Roboto Mono", monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.topNavLinks {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.topNavLink.active {
+  color: var(--ink);
+  border-color: var(--line);
+  background: rgba(255, 255, 255, 0.04);
+}
+
 button,
 input,
 textarea,
@@ -63,6 +105,37 @@ a {
 .simplifiedHero {
   align-items: end;
   margin-bottom: 18px;
+}
+
+.landingIntro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 20px;
+  align-items: end;
+  margin-bottom: 20px;
+}
+
+.landingCopy h1 {
+  max-width: 10ch;
+  font-size: clamp(2.3rem, 4.4vw, 3.8rem);
+}
+
+.landingFacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.landingFact {
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--cyan);
+  font: 700 11px/1 "SF Mono", "Roboto Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
 .receiptPageHeader {
@@ -247,6 +320,56 @@ h2 {
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--purple), var(--green), transparent);
   opacity: 0.9;
+}
+
+.landingGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+.landingPanel {
+  border-radius: 30px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(circle at top right, rgba(109, 220, 255, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(13, 18, 38, 0.9), rgba(10, 14, 30, 0.96));
+  box-shadow: var(--shadow);
+}
+
+.landingPanel.compact {
+  min-height: 0;
+}
+
+.landingPanel h2 {
+  margin-bottom: 10px;
+  font-size: clamp(1.3rem, 2vw, 1.8rem);
+}
+
+.landingPanel > p:last-of-type {
+  margin: 0 0 16px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.featureList {
+  margin: 0 0 18px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.featureList li {
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--muted);
+  line-height: 1.35;
+  font-size: 0.94rem;
 }
 
 .heroLabel {
@@ -511,6 +634,24 @@ h2 {
   border-radius: 18px;
   border: 1px solid rgba(255, 255, 255, 0.05);
   background: rgba(255, 255, 255, 0.02);
+}
+
+.stepListItem {
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.stepListItem strong {
+  font-size: 0.98rem;
+}
+
+.stepListItem span {
+  color: var(--muted);
+  line-height: 1.45;
 }
 
 .stepList strong {
@@ -832,6 +973,140 @@ button.secondary {
   border-bottom-color: var(--cyan);
 }
 
+.shopGridDark {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.shopCard {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  text-align: left;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 14px;
+  box-shadow: none;
+  color: var(--ink);
+}
+
+.shopCard.active {
+  border-color: rgba(109, 220, 255, 0.4);
+  background: rgba(109, 220, 255, 0.08);
+}
+
+.shopCard strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 1rem;
+}
+
+.shopCard p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.shopCard span {
+  color: var(--cyan);
+  font: 700 12px/1 "SF Mono", "Roboto Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.shopCardImage,
+.heroPhotoDark {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.heroPhotoDark {
+  width: 150px;
+  flex-shrink: 0;
+}
+
+.blinkSheet {
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 18px;
+}
+
+.blinkSheetHead {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.blinkSheetHead h3 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.blinkSheetHead p {
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+.blinkSheetHead > strong {
+  border-radius: 999px;
+  padding: 10px 12px;
+  background: rgba(109, 220, 255, 0.1);
+  color: var(--cyan);
+  border: 1px solid rgba(109, 220, 255, 0.12);
+  white-space: nowrap;
+}
+
+.blinkControls {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 14px;
+}
+
+.darkTotals {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.technicalPanel {
+  margin-top: 18px;
+  display: grid;
+  gap: 12px;
+}
+
+.technicalPanel article {
+  border-radius: 22px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.technicalPanel h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.technicalPanel pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--muted);
+  font: 13px/1.5 "SF Mono", "Roboto Mono", monospace;
+}
+
+.secondaryNav {
+  margin-top: 14px;
+}
+
 .receipt {
   margin-top: 18px;
   padding: 18px;
@@ -945,6 +1220,9 @@ button.secondary {
 @media (max-width: 1120px) {
   .hero,
   .layout,
+  .landingIntro,
+  .landingGrid,
+  .shopGridDark,
   .heroSummary,
   .heroStats,
   .timelineSteps,
@@ -960,7 +1238,8 @@ button.secondary {
   .receiptPageBody,
   .doubleStory,
   .tripleStory,
-  .progressLabels {
+  .progressLabels,
+  .blinkControls {
     grid-template-columns: 1fr;
   }
 }
@@ -987,6 +1266,16 @@ button.secondary {
     padding: 16px;
   }
 
+  .topNav {
+    padding: 14px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .landingFacts {
+    justify-content: flex-start;
+  }
+
   h1,
   .receiptTitle {
     max-width: none;
@@ -994,6 +1283,10 @@ button.secondary {
   }
 
   .actions {
+    flex-direction: column;
+  }
+
+  .blinkSheetHead {
     flex-direction: column;
   }
 }

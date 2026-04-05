@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-label="Validator Hoodie">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffe6c9"/>
+      <stop offset="100%" stop-color="#c17d52"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="420" fill="url(#bg)"/>
+  <path d="M256 120c20-28 44-42 64-42s44 14 64 42l56 42-28 58-34-22v150H262V198l-34 22-28-58z" fill="#8d4f2f"/>
+  <path d="M320 134c-22 0-44 10-56 28l20 20c8-14 20-20 36-20s28 6 36 20l20-20c-12-18-34-28-56-28z" fill="#a36340"/>
+  <rect x="286" y="214" width="68" height="96" rx="8" fill="#6e3d25"/>
+  <path d="M286 286h68" stroke="#c78a61" stroke-width="6"/>
+  <path d="M252 236c22 18 44 18 68 0m0 0c24 18 46 18 68 0" fill="none" stroke="#d7a178" stroke-width="5" stroke-linecap="round"/>
+</svg>

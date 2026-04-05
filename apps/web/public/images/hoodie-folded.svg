@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-label="Folded warm hoodie product shot">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffead3"/>
+      <stop offset="100%" stop-color="#cc8a61"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="420" fill="url(#bg)"/>
+  <ellipse cx="320" cy="325" rx="185" ry="34" fill="#7d462b" opacity="0.2"/>
+  <rect x="184" y="108" width="272" height="218" rx="24" fill="#8f4f31"/>
+  <rect x="224" y="144" width="192" height="56" rx="12" fill="#a66442"/>
+  <rect x="242" y="212" width="156" height="92" rx="12" fill="#754129"/>
+  <path d="M230 152c22-18 42-26 90-26s68 8 90 26" fill="none" stroke="#c28861" stroke-width="6" stroke-linecap="round"/>
+  <path d="M270 260h100" stroke="#bf815b" stroke-width="6" stroke-linecap="round"/>
+</svg>
