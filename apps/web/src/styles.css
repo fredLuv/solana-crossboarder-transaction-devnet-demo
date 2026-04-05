@@ -1,0 +1,1128 @@
+:root {
+  --bg: #050816;
+  --bg-2: #0a0f23;
+  --surface: rgba(13, 18, 38, 0.84);
+  --surface-strong: rgba(17, 24, 48, 0.96);
+  --surface-soft: rgba(255, 255, 255, 0.03);
+  --line: rgba(196, 205, 255, 0.1);
+  --line-strong: rgba(196, 205, 255, 0.18);
+  --ink: #f4f7ff;
+  --muted: #9ca7c7;
+  --purple: #9945ff;
+  --green: #14f195;
+  --cyan: #6ddcff;
+  --gold: #ffcc8f;
+  --danger: #ff8e8e;
+  --shadow: 0 28px 80px rgba(2, 6, 23, 0.46);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  font-family: "Avenir Next", "Inter", "SF Pro Display", ui-sans-serif, system-ui, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 12% 10%, rgba(153, 69, 255, 0.2), transparent 24%),
+    radial-gradient(circle at 88% 14%, rgba(20, 241, 149, 0.13), transparent 18%),
+    radial-gradient(circle at 50% 120%, rgba(79, 130, 255, 0.12), transparent 35%),
+    linear-gradient(180deg, #060814 0%, #090d1e 48%, #050816 100%);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+.shell,
+.receiptPage {
+  min-height: 100vh;
+  padding: 28px;
+}
+
+.hero,
+.receiptPageBody {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+  gap: 20px;
+}
+
+.simplifiedHero {
+  align-items: end;
+  margin-bottom: 18px;
+}
+
+.receiptPageHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 16px;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font: 700 11px/1.2 "SF Mono", "Roboto Mono", monospace;
+}
+
+h1,
+h2,
+h3,
+strong {
+  color: var(--ink);
+}
+
+.mono {
+  font-family: "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  word-break: break-all;
+}
+
+h1,
+.receiptTitle {
+  margin: 0;
+  max-width: 11ch;
+  font-size: clamp(2.65rem, 5.1vw, 4.7rem);
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+}
+
+h2 {
+  margin: 0;
+  font-size: clamp(1.45rem, 2.6vw, 2rem);
+  letter-spacing: -0.03em;
+}
+
+.lede,
+.subhead,
+.heroCard p,
+.storyBlock p,
+.invoice p,
+.emptyState p,
+.modalText {
+  color: var(--muted);
+}
+
+.lede {
+  max-width: 56ch;
+  margin: 16px 0 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.progressStrip {
+  margin: 0 0 20px;
+}
+
+.progressTrack {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.progressFill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--purple), var(--green));
+  box-shadow: 0 0 24px rgba(20, 241, 149, 0.18);
+}
+
+.progressLabels {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.progressLabel {
+  padding-top: 2px;
+  color: #6d7597;
+  text-align: center;
+  font: 700 11px/1 "SF Mono", "Roboto Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.progressLabel.done {
+  color: var(--cyan);
+}
+
+.progressLabel.active {
+  color: #e8fffb;
+}
+
+.heroStats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.heroStat,
+.heroCard,
+.panel,
+.invoice,
+.metric,
+.storyBlock,
+.quotePanel,
+.receipt,
+.modal,
+.timelineStep {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.heroStat,
+.metric,
+.storyBlock,
+.receipt,
+.timelineStep {
+  border-radius: 22px;
+}
+
+.heroStat,
+.metric {
+  padding: 18px;
+}
+
+.heroStat strong {
+  display: block;
+  font-size: 1.7rem;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.heroStat span,
+.metric span,
+.quoteMetric span,
+.receiptGrid span,
+.modalSummary span {
+  display: block;
+  color: var(--muted);
+  font: 700 11px/1.2 "SF Mono", "Roboto Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 8px;
+}
+
+.heroCard {
+  position: relative;
+  align-self: stretch;
+  overflow: hidden;
+  padding: 22px;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at top right, rgba(20, 241, 149, 0.16), transparent 26%),
+    radial-gradient(circle at top left, rgba(153, 69, 255, 0.22), transparent 28%),
+    linear-gradient(180deg, rgba(15, 21, 45, 0.98), rgba(10, 14, 30, 0.98));
+}
+
+.heroCard::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--purple), var(--green), transparent);
+  opacity: 0.9;
+}
+
+.heroLabel {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font: 700 11px/1.2 "SF Mono", "Roboto Mono", monospace;
+}
+
+.heroCard strong {
+  display: block;
+  max-width: 16ch;
+  font-size: clamp(1.55rem, 2.5vw, 2rem);
+  line-height: 1.04;
+  margin-bottom: 12px;
+  letter-spacing: -0.04em;
+}
+
+.heroSummary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.heroSummary > div,
+.quoteMetric,
+.metric,
+.heroStat {
+  background: var(--surface-soft);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 18px;
+  padding: 12px 13px;
+}
+
+.heroSummary span,
+.actionRailHeader p {
+  display: block;
+  color: var(--muted);
+  font: 700 11px/1.3 "SF Mono", "Roboto Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.heroSummary strong {
+  margin-top: 6px;
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+.walletPanel {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.walletPanel {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: start;
+  padding: 18px 20px;
+  margin: 0 0 16px;
+}
+
+.walletPanel.disconnected {
+  grid-template-columns: 1.15fr 0.85fr;
+}
+
+.walletPanel span {
+  display: block;
+  color: var(--muted);
+  font: 700 11px/1.3 "SF Mono", "Roboto Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 7px;
+}
+
+.walletPanel strong {
+  display: block;
+  font-size: 1.25rem;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.walletPanel p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.connectorList {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-content: flex-start;
+}
+
+.opsTimeline {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 16px;
+}
+
+.opsTimelineItem {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.opsTimelineDot {
+  width: 12px;
+  height: 12px;
+  margin-top: 6px;
+  border-radius: 999px;
+  background: rgba(156, 167, 199, 0.22);
+  box-shadow: inset 0 0 0 1px rgba(156, 167, 199, 0.14);
+}
+
+.opsTimelineItem.active {
+  border-color: rgba(255, 204, 143, 0.12);
+  background: rgba(255, 204, 143, 0.06);
+}
+
+.opsTimelineItem.active .opsTimelineDot {
+  background: var(--gold);
+  box-shadow: 0 0 0 6px rgba(255, 204, 143, 0.08);
+}
+
+.opsTimelineItem.done {
+  border-color: rgba(20, 241, 149, 0.12);
+  background: rgba(20, 241, 149, 0.06);
+}
+
+.opsTimelineItem.done .opsTimelineDot {
+  background: var(--green);
+  box-shadow: 0 0 0 6px rgba(20, 241, 149, 0.08);
+}
+
+.opsTimelineItem strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.96rem;
+}
+
+.opsTimelineItem p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.compact {
+  padding: 11px 14px;
+  font-size: 13px;
+}
+
+.heroNote {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(20, 241, 149, 0.14);
+  background: rgba(20, 241, 149, 0.05);
+}
+
+.heroNote span {
+  display: block;
+  color: var(--muted);
+  font: 700 11px/1.3 "SF Mono", "Roboto Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 6px;
+}
+
+.timelineBar {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  margin-top: 16px;
+}
+
+.timelineBar span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--purple), var(--green));
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.78fr) minmax(0, 1.22fr);
+  gap: 20px;
+}
+
+.panel {
+  border-radius: 30px;
+  padding: 22px;
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+  margin-bottom: 16px;
+}
+
+.subhead {
+  margin: 8px 0 0;
+  font-size: 15px;
+}
+
+.pill {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(20, 241, 149, 0.1);
+  color: var(--green);
+  border: 1px solid rgba(20, 241, 149, 0.12);
+  font: 700 11px/1 "SF Mono", "Roboto Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.pill.warm,
+.pill.neutral {
+  color: var(--gold);
+  border-color: rgba(255, 204, 143, 0.1);
+  background: rgba(255, 204, 143, 0.08);
+}
+
+.pill.good {
+  color: var(--green);
+  background: rgba(20, 241, 149, 0.12);
+}
+
+.list,
+.story {
+  display: grid;
+  gap: 12px;
+}
+
+.stepList {
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.stepList li {
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.stepList strong {
+  font-size: 0.98rem;
+}
+
+.stepList span {
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.invoice {
+  border-radius: 22px;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1.05fr 0.8fr 0.9fr;
+  gap: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.invoice.active {
+  outline: 2px solid rgba(20, 241, 149, 0.2);
+  transform: translateY(-1px);
+}
+
+.invoice strong {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.timelineSteps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.timelineStep {
+  padding: 14px;
+  display: flex;
+  gap: 12px;
+  align-items: start;
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.timelineStep.active {
+  background: rgba(20, 241, 149, 0.08);
+}
+
+.timelineStep.done {
+  background: rgba(109, 220, 255, 0.08);
+}
+
+.timelineDot {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(20, 241, 149, 0.12);
+  color: var(--green);
+  font: 700 14px/1 "SF Mono", "Roboto Mono", monospace;
+  flex-shrink: 0;
+}
+
+.timelineStep.done .timelineDot {
+  background: rgba(109, 220, 255, 0.14);
+  color: var(--cyan);
+}
+
+.timelineStep.pending .timelineDot {
+  background: rgba(156, 167, 199, 0.08);
+  color: var(--muted);
+}
+
+.timelineStep strong {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.timelineStep p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.detailTop {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.detailTopWide {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.storyBlock {
+  padding: 16px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015));
+}
+
+.storyBlock h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+}
+
+.detailGrid,
+.quoteGrid,
+.receiptGrid,
+.modalSummary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.detailGrid {
+  margin-bottom: 12px;
+}
+
+.detailGridWide {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.metric strong,
+.quoteMetric strong,
+.receiptGrid strong,
+.modalSummary strong {
+  font-size: clamp(1.1rem, 2vw, 1.65rem);
+  line-height: 1.1;
+}
+
+.metric.good strong,
+.quoteMetric.good strong {
+  color: var(--green);
+}
+
+.quotePanel {
+  border-radius: 24px;
+  padding: 18px;
+  margin-bottom: 14px;
+  background:
+    radial-gradient(circle at top right, rgba(153, 69, 255, 0.16), transparent 26%),
+    linear-gradient(180deg, rgba(11, 16, 33, 0.92), rgba(13, 18, 38, 0.92));
+}
+
+.quoteHeadline {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+  margin-bottom: 14px;
+}
+
+.quoteLabel {
+  display: block;
+  color: var(--cyan);
+  font: 700 11px/1.2 "SF Mono", "Roboto Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  margin-bottom: 8px;
+}
+
+.quoteHeadline strong {
+  font-size: 1.35rem;
+  line-height: 1.08;
+}
+
+.quoteBadge {
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: rgba(20, 241, 149, 0.1);
+  color: var(--green);
+  border: 1px solid rgba(20, 241, 149, 0.12);
+  font: 700 11px/1 "SF Mono", "Roboto Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.quoteMetric {
+  padding: 14px;
+}
+
+.doubleStory,
+.tripleStory {
+  margin-bottom: 14px;
+}
+
+.doubleStory {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tripleStory {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.compactStory {
+  margin-bottom: 12px;
+}
+
+.emptyState {
+  border: 1px dashed var(--line-strong);
+  border-radius: 22px;
+  padding: 18px;
+  margin-bottom: 14px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.emptyState strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+.actionRail {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015));
+}
+
+.actionRailHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.actionRailHeader h3 {
+  margin: 0 0 6px;
+  font-size: 1.15rem;
+}
+
+.actionRailHeader p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.statusDot {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font: 700 11px/1 "SF Mono", "Roboto Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.statusDot.good {
+  background: rgba(20, 241, 149, 0.12);
+  color: var(--green);
+}
+
+.statusDot.warn {
+  background: rgba(255, 204, 143, 0.11);
+  color: var(--gold);
+}
+
+button {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 14px 18px;
+  cursor: pointer;
+  background: linear-gradient(90deg, var(--purple), var(--green));
+  color: #071017;
+  font: 700 13px/1 "SF Mono", "Roboto Mono", monospace;
+  letter-spacing: 0.04em;
+  transition:
+    transform 140ms ease,
+    opacity 140ms ease,
+    background 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 32px rgba(20, 241, 149, 0.14);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+button.ghost {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+button.secondary {
+  background: linear-gradient(90deg, rgba(153, 69, 255, 0.9), rgba(109, 220, 255, 0.9));
+  color: white;
+}
+
+.linkAction {
+  color: var(--cyan);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(109, 220, 255, 0.34);
+}
+
+.linkAction:hover {
+  border-bottom-color: var(--cyan);
+}
+
+.receipt {
+  margin-top: 18px;
+  padding: 18px;
+  background: linear-gradient(180deg, rgba(153, 69, 255, 0.08), rgba(13, 18, 38, 0.94));
+}
+
+.receiptHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.receiptHeader strong {
+  font-size: 20px;
+}
+
+.receiptHeader span {
+  color: var(--green);
+  font: 700 11px/1 "SF Mono", "Roboto Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.receiptPageBody {
+  align-items: start;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.receiptPage .panel {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015));
+}
+
+.receiptHero {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.receiptHeroMetric {
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(14px);
+}
+
+.receiptHeroMetric span {
+  display: block;
+  color: var(--muted);
+  font: 700 11px/1.2 "SF Mono", "Roboto Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 8px;
+}
+
+.receiptHeroMetric strong {
+  font-size: 1.15rem;
+  line-height: 1.15;
+}
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 6, 15, 0.68);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  backdrop-filter: blur(16px);
+}
+
+.modal {
+  width: min(620px, 100%);
+  border-radius: 30px;
+  padding: 26px;
+  background: rgba(13, 18, 38, 0.98);
+}
+
+.modal h2 {
+  margin-bottom: 12px;
+}
+
+.modalText {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+.errorText {
+  color: var(--danger);
+  font: 700 14px/1.5 "SF Mono", "Roboto Mono", monospace;
+  margin: 14px 0 0;
+}
+
+.successText {
+  color: var(--green);
+  font: 700 14px/1.5 "SF Mono", "Roboto Mono", monospace;
+  margin: 14px 0 0;
+}
+
+.helperText {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 12px 0 0;
+}
+
+@media (max-width: 1120px) {
+  .hero,
+  .layout,
+  .heroSummary,
+  .heroStats,
+  .timelineSteps,
+  .detailTop,
+  .detailTopWide,
+  .detailGrid,
+  .detailGridWide,
+  .quoteGrid,
+  .receiptHero,
+  .receiptGrid,
+  .modalSummary,
+  .invoice,
+  .receiptPageBody,
+  .doubleStory,
+  .tripleStory,
+  .progressLabels {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 980px) {
+  .receiptPageHeader,
+  .actionRailHeader {
+    flex-direction: column;
+  }
+
+  .walletPanel,
+  .walletPanel.disconnected {
+    grid-template-columns: 1fr;
+  }
+
+  .connectorList {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 720px) {
+  .shell,
+  .receiptPage {
+    padding: 16px;
+  }
+
+  h1,
+  .receiptTitle {
+    max-width: none;
+    font-size: 2.6rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+}
+
+@media print {
+  @page {
+    size: auto;
+    margin: 14mm;
+  }
+
+  html,
+  body {
+    background: white !important;
+    color: #111 !important;
+  }
+
+  .shell {
+    display: none !important;
+  }
+
+  .actions,
+  .hero,
+  .modalBackdrop {
+    display: none !important;
+  }
+
+  .receiptPage {
+    min-height: auto;
+    padding: 0 !important;
+    background: white !important;
+    color: #111 !important;
+  }
+
+  .receiptPageHeader,
+  .receiptHero,
+  .receiptPageBody,
+  .receiptGrid {
+    break-inside: avoid;
+  }
+
+  .receiptPageHeader {
+    margin-bottom: 18px;
+  }
+
+  .receiptPageBody {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+
+  .receiptHero {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .receiptHeroMetric,
+  .panel,
+  .quotePanel,
+  .metric,
+  .storyBlock {
+    background: white !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  }
+
+  .panel {
+    border-radius: 14px !important;
+    padding: 16px !important;
+    break-inside: avoid;
+  }
+
+  .receiptHeroMetric {
+    border-radius: 12px !important;
+    padding: 12px 14px !important;
+  }
+
+  .receiptTitle,
+  h1,
+  h2,
+  h3,
+  strong,
+  p,
+  span,
+  a,
+  .lede,
+  .subhead,
+  .mono,
+  .linkAction,
+  .eyebrow,
+  .pill,
+  .receiptGrid span,
+  .receiptHeroMetric span,
+  .quoteLabel,
+  .heroLabel {
+    color: #111 !important;
+  }
+
+  .eyebrow,
+  .receiptGrid span,
+  .receiptHeroMetric span,
+  .quoteLabel {
+    opacity: 0.72;
+  }
+
+  .pill {
+    background: #f2f2f2 !important;
+    border-color: rgba(0, 0, 0, 0.12) !important;
+  }
+
+  .linkAction {
+    text-decoration: underline !important;
+    border-bottom: none !important;
+  }
+
+  .receiptGrid strong,
+  .receiptHeroMetric strong {
+    font-size: 1rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .receiptTitle,
+  h1 {
+    max-width: none !important;
+    font-size: 28pt !important;
+    line-height: 1 !important;
+    letter-spacing: -0.04em !important;
+  }
+}

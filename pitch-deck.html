@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreightFlow FX Pitch Deck</title>
+  <style>
+    :root {
+      --bg: #0b1415;
+      --panel: rgba(9, 18, 20, 0.78);
+      --panel-2: rgba(19, 34, 35, 0.76);
+      --line: rgba(199, 227, 217, 0.18);
+      --text: #f4f3ee;
+      --muted: #b7c0bc;
+      --accent: #86f0bc;
+      --accent-2: #ff9262;
+      --accent-3: #8fc8ff;
+      --shadow: rgba(0, 0, 0, 0.32);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: "Trebuchet MS", "Avenir Next", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(134, 240, 188, 0.16), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(255, 146, 98, 0.18), transparent 22%),
+        radial-gradient(circle at 50% 80%, rgba(143, 200, 255, 0.12), transparent 26%),
+        linear-gradient(160deg, #071011 0%, #102022 52%, #0a1215 100%);
+      overflow: hidden;
+    }
+
+    .app {
+      height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .topbar,
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      backdrop-filter: blur(18px);
+      background: rgba(4, 8, 10, 0.34);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .footer {
+      border-bottom: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .deck {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slides {
+      display: flex;
+      height: 100%;
+      transition: transform 420ms ease;
+    }
+
+    .slide {
+      width: 100%;
+      flex: 0 0 100%;
+      padding: 34px 34px 28px;
+      display: grid;
+      align-items: stretch;
+    }
+
+    .frame {
+      height: 100%;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      box-shadow: 0 30px 80px var(--shadow);
+      padding: 34px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.05), transparent 34%),
+        linear-gradient(315deg, rgba(255,255,255,0.03), transparent 32%);
+      pointer-events: none;
+    }
+
+    .single {
+      grid-template-columns: 1fr;
+    }
+
+    .kicker {
+      margin: 0 0 10px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    h1,
+    h2 {
+      margin: 0 0 14px;
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+    }
+
+    h1 {
+      font-size: clamp(44px, 8vw, 88px);
+      max-width: 10ch;
+    }
+
+    h2 {
+      font-size: clamp(28px, 4vw, 52px);
+      max-width: 11ch;
+    }
+
+    p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.48;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .card,
+    .stat,
+    .quote {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 18px;
+    }
+
+    .card strong,
+    .stat strong {
+      display: block;
+      color: var(--text);
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .stat strong {
+      font-size: 38px;
+      color: var(--accent);
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text);
+    }
+
+    li {
+      margin-bottom: 10px;
+      font-size: 18px;
+      line-height: 1.4;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .tag {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .highlight {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .accent {
+      color: var(--accent);
+    }
+
+    .accent-2 {
+      color: var(--accent-2);
+    }
+
+    .progress {
+      width: min(380px, 52vw);
+      height: 6px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress > span {
+      display: block;
+      height: 100%;
+      width: 12.5%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width 320ms ease;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .slide-index {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .mini-chart {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .bar {
+      display: grid;
+      grid-template-columns: 170px 1fr 72px;
+      gap: 10px;
+      align-items: center;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .bar-fill {
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+
+    .bar-fill span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent-3), var(--accent));
+    }
+
+    .number-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .number-item {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .number {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, rgba(134,240,188,0.16), rgba(255,146,98,0.16));
+      color: var(--text);
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .frame {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .bar {
+        grid-template-columns: 1fr;
+      }
+
+      .deck {
+        overflow-y: auto;
+      }
+
+      body {
+        overflow: auto;
+      }
+
+      .app {
+        min-height: 100vh;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div>
+        <div class="brand">FreightFlow FX</div>
+        <div class="meta">Interactive pitch deck built from Colosseum research</div>
+      </div>
+      <div class="progress" aria-hidden="true"><span id="progressFill"></span></div>
+    </header>
+
+    <main class="deck">
+      <div class="slides" id="slides">
+        <section class="slide">
+          <div class="frame">
+            <div>
+              <p class="kicker">Slide 1</p>
+              <h1>Cross-border freight money, finally built for speed.</h1>
+              <p>
+                <span class="highlight">FreightFlow FX</span> is a stablecoin-native operating layer for
+                exporters, freight forwarders, and suppliers that need quote locks, payment approvals,
+                and instant settlement in one workflow.
+              </p>
+              <div class="tags">
+                <span class="tag">Stablecoins</span>
+                <span class="tag">Freight</span>
+                <span class="tag">FX Lock</span>
+                <span class="tag">Treasury</span>
+                <span class="tag">Approvals</span>
+              </div>
+            </div>
+            <div class="column">
+              <div class="stat">
+                <strong>5,428</strong>
+                Total projects in the Colosseum corpus used to shape this recommendation.
+              </div>
+              <div class="stat">
+                <strong>293</strong>
+                Prize-winning projects analyzed for actual winner patterns.
+              </div>
+              <div class="quote">
+                Judges do not need to imagine the workflow. They can watch an invoice become a quoted,
+                approved, and settled payment in real time.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide">
+          <div class="frame">
+            <div>
+              <p class="kicker">Slide 2</p>
+              <h2>The pain is operational, not theoretical.</h2>
+              <ul>
+                <li>Freight teams deal with urgent invoices, suppliers in different countries, and unstable FX spreads.</li>
+                <li>Wires are slow, treasury approvals are manual, and reconciliation gets buried in email threads.</li>
+                <li>Cash flow breaks when suppliers need payment before buyers settle.</li>
+              </ul>
+            </div>
+            <div class="column">
+              <div class="card">
+                <strong>What breaks today</strong>
+                Margin gets squeezed by time delays, fees, and fragmented approvals.
+              </div>
+              <div class="card">
+                <strong>What users really want</strong>
+                One workflow where money movement, quote certainty, and approvals happen together.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide">
+          <div class="frame">
+            <div>
+              <p class="kicker">Slide 3</p>
+              <h2>Why this lane wins more often than generic AI.</h2>
+              <p>
+                In the local research, <span class="accent">stablecoins</span>, <span class="accent">oracle</span>,
+                and <span class="accent">DePIN</span> show up disproportionately often among winners, while generic
+                AI is much more common in the total corpus than in the winner slice.
+              </p>
+              <div class="mini-chart">
+                <div class="bar">
+                  <div>Stablecoins in winners</div>
+                  <div class="bar-fill"><span style="width: 56%"></span></div>
+                  <div>11.3%</div>
+                </div>
+                <div class="bar">
+                  <div>Stablecoins in corpus</div>
+                  <div class="bar-fill"><span style="width: 30%"></span></div>
+                  <div>6.1%</div>
+                </div>
+                <div class="bar">
+                  <div>AI in winners</div>
+                  <div class="bar-fill"><span style="width: 29%"></span></div>
+                  <div>5.8%</div>
+                </div>
+                <div class="bar">
+                  <div>AI in corpus</div>
+                  <div class="bar-fill"><span style="width: 53%"></span></div>
+                  <div>10.6%</div>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="card">
+                <strong>Interpretation</strong>
+                Strong hacks win when they target an ugly business workflow with a crisp financial payoff.
+              </div>
+              <div class="card">
+                <strong>What that means</strong>
+                Build a vertical money tool, not a horizontal crypto assistant.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide">
+          <div class="frame">
+            <div>
+              <p class="kicker">Slide 4</p>
+              <h2>The product</h2>
+              <div class="number-list">
+                <div class="number-item">
+                  <div class="number">1</div>
+                  <div>
+                    <strong>Create payment order</strong>
+                    <p>Attach supplier, shipment, invoice amount, and destination currency.</p>
+                  </div>
+                </div>
+                <div class="number-item">
+                  <div class="number">2</div>
+                  <div>
+                    <strong>Lock quote</strong>
+                    <p>Show payout amount, fees, and a time-bound FX window.</p>
+                  </div>
+                </div>
+                <div class="number-item">
+                  <div class="number">3</div>
+                  <div>
+                    <strong>Approve and settle</strong>
+                    <p>Use a smart wallet or multisig to release funds instantly.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="card">
+                <strong>Core user</strong>
+                Freight forwarder or exporter finance operator.
+              </div>
+              <div class="card">
+                <strong>Moment of value</strong>
+                Supplier gets paid immediately with fewer emails, fewer approvals, and fewer FX surprises.
+              </div>
+              <div class="card">
+                <strong>Stretch mode</strong>
+                Advance supplier payment before buyer settlement.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide">
+          <div class="frame">
+            <div>
+              <p class="kicker">Slide 5</p>
+              <h2>Competition map</h2>
+              <p>
+                The stablecoin lane is competitive, but still far less saturated than generic trading infrastructure.
+                That makes it a good place to be if we stay narrow.
+              </p>
+              <ul>
+                <li><span class="highlight">CargoBill</span>: supply-chain stablecoin payments, 1st Place in Stablecoins.</li>
+                <li><span class="highlight">Credible Finance</span>: remittance rail with strong FX framing, 2nd Place in Stablecoins.</li>
+                <li><span class="highlight">BlindPay</span>: API-first cross-border rail.</li>
+                <li><span class="highlight">Our wedge</span>: invoice-linked approvals plus FX lock plus freight workflow.</li>
+              </ul>
+            </div>
+            <div class="column">
+              <div class="stat">
+                <strong>202</strong>
+                Crowdedness level of the stablecoin payment rail cluster.
+              </div>
+              <div class="stat">
+                <strong>323</strong>
+                Crowdedness level of generic DEX and trading infrastructure.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide">
+          <div class="frame">
+            <div>
+              <p class="kicker">Slide 6</p>
+              <h2>Why Solana, specifically</h2>
+              <ul>
+                <li>Fast settlement makes ops teams trust the workflow.</li>
+                <li>Low fees let us process real business payments without absurd UX tax.</li>
+                <li>Multisig and smart-wallet patterns fit treasury approvals naturally.</li>
+                <li>Stablecoin and payment ecosystem depth makes expansion credible after the hackathon.</li>
+              </ul>
+            </div>
+            <div class="column">
+              <div class="quote">
+                Solana is not just the chain underneath the demo. It is what makes treasury approvals
+                and settlement feel operational instead of experimental.
+              </div>
+              <div class="card">
+                <strong>Future hooks</strong>
+                compliance partners, embedded financing, on/off-ramp APIs, supplier reputation, and invoice analytics.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide">
+          <div class="frame">
+            <div>
+              <p class="kicker">Slide 7</p>
+              <h2>The live demo story</h2>
+              <div class="number-list">
+                <div class="number-item">
+                  <div class="number">A</div>
+                  <div>
+                    <strong>Open invoice</strong>
+                    <p>Show shipment, supplier, amount, and destination.</p>
+                  </div>
+                </div>
+                <div class="number-item">
+                  <div class="number">B</div>
+                  <div>
+                    <strong>Generate quote</strong>
+                    <p>Show stablecoin route, fee estimate, and locked payout.</p>
+                  </div>
+                </div>
+                <div class="number-item">
+                  <div class="number">C</div>
+                  <div>
+                    <strong>Approve and settle</strong>
+                    <p>Approve with treasury wallet, then show settlement receipt and savings delta.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="card">
+                <strong>Judge reaction we want</strong>
+                "I understand the user, the pain, and the business model in under 90 seconds."
+              </div>
+              <div class="card">
+                <strong>Metric to flash</strong>
+                "Wire completed in minutes, not days."
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide">
+          <div class="frame single">
+            <div>
+              <p class="kicker">Slide 8</p>
+              <h2>Build the operating system for cross-border freight money.</h2>
+              <p>
+                FreightFlow FX is a hackathon-friendly product with a real business narrative, a short demo loop,
+                and a clear post-hackathon path. It is specific enough to feel differentiated and broad enough to
+                grow into a serious payments and treasury company.
+              </p>
+              <div class="hero-grid">
+                <div class="card">
+                  <strong>Best opening line</strong>
+                  "We are not building another wallet. We are building the payments operating layer for global freight."
+                </div>
+                <div class="card">
+                  <strong>Best closing line</strong>
+                  "If money is the bottleneck in logistics, then the winner is the team that makes it programmable."
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="slide-index" id="slideIndex">1 / 8</div>
+      <div class="meta">Use arrow keys, space, or the buttons to navigate</div>
+      <div class="controls">
+        <button id="prevBtn" type="button">Previous</button>
+        <button id="nextBtn" type="button">Next</button>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const slides = document.getElementById("slides");
+    const slideIndex = document.getElementById("slideIndex");
+    const progressFill = document.getElementById("progressFill");
+    const total = slides.children.length;
+    let current = 0;
+
+    function render() {
+      slides.style.transform = `translateX(-${current * 100}%)`;
+      slideIndex.textContent = `${current + 1} / ${total}`;
+      progressFill.style.width = `${((current + 1) / total) * 100}%`;
+    }
+
+    function next() {
+      current = Math.min(current + 1, total - 1);
+      render();
+    }
+
+    function prev() {
+      current = Math.max(current - 1, 0);
+      render();
+    }
+
+    document.getElementById("nextBtn").addEventListener("click", next);
+    document.getElementById("prevBtn").addEventListener("click", prev);
+
+    window.addEventListener("keydown", (event) => {
+      if (["ArrowRight", "PageDown", " "].includes(event.key)) {
+        event.preventDefault();
+        next();
+      }
+      if (["ArrowLeft", "PageUp"].includes(event.key)) {
+        event.preventDefault();
+        prev();
+      }
+      if (event.key === "Home") {
+        current = 0;
+        render();
+      }
+      if (event.key === "End") {
+        current = total - 1;
+        render();
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>
