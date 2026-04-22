@@ -1,11 +1,14 @@
+use axum::body::Body;
 use axum::extract::{Query, State};
-use axum::http::header;
+use axum::http::{header, HeaderValue, Request};
+use axum::middleware::{from_fn, Next};
+use axum::response::Response;
 use axum::routing::get;
 use axum::{Json, Router};
 use solana_client::nonblocking::rpc_client::RpcClient;
 use std::collections::HashMap;
 use std::sync::Arc;
-use tower_http::cors::CorsLayer;
+use tower_http::cors::{AllowOrigin, CorsLayer};
 
 use crate::actions::{checkout, tip};
 use crate::error::AppError;
@@ -19,9 +22,17 @@ pub struct AppState {
 
 pub fn build_router(rpc: Arc<RpcClient>) -> Router {
     let state = Arc::new(AppState { rpc });
+    let allowed_origins = std::env::var("ALLOWED_ORIGINS")
+        .unwrap_or_else(|_| {
+            "http://127.0.0.1:4174,http://localhost:4174,http://127.0.0.1:5173,http://localhost:5173"
+                .into()
+        })
+        .split(',')
+        .filter_map(|origin| origin.trim().parse::<HeaderValue>().ok())
+        .collect::<Vec<_>>();
 
     let cors = CorsLayer::new()
-        .allow_origin(tower_http::cors::Any)
+        .allow_origin(AllowOrigin::list(allowed_origins))
         .allow_methods(tower_http::cors::Any)
         .allow_headers([
             header::CONTENT_TYPE,
@@ -35,7 +46,27 @@ pub fn build_router(rpc: Arc<RpcClient>) -> Router {
         .route("/api/actions/checkout", get(get_checkout).post(post_checkout))
         .route("/api/actions/tip", get(get_tip).post(post_tip))
         .layer(cors)
+        .layer(from_fn(security_headers))
         .with_state(state)
+}
+
+async fn security_headers(request: Request<Body>, next: Next) -> Response {
+    let mut response = next.run(request).await;
+    let headers = response.headers_mut();
+    headers.insert(header::CACHE_CONTROL, HeaderValue::from_static("no-store"));
+    headers.insert(
+        header::CONTENT_SECURITY_POLICY,
+        HeaderValue::from_static("default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"),
+    );
+    headers.insert(header::REFERRER_POLICY, HeaderValue::from_static("no-referrer"));
+    headers.insert("cross-origin-resource-policy", HeaderValue::from_static("same-origin"));
+    headers.insert(
+        "permissions-policy",
+        HeaderValue::from_static("camera=(), microphone=(), geolocation=(), payment=()"),
+    );
+    headers.insert("x-content-type-options", HeaderValue::from_static("nosniff"));
+    headers.insert("x-frame-options", HeaderValue::from_static("DENY"));
+    response
 }
 
 async fn get_actions_json() -> Json<ActionsJson> {

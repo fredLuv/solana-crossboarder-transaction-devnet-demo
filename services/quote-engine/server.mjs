@@ -33,7 +33,13 @@ const dataDir = process.env.DATA_DIR || path.join(__dirname, ".data");
 const dbPath = process.env.SQLITE_PATH || path.join(dataDir, "solana-crossboarder-transaction-devnet-demo.sqlite");
 const treasuryPath = path.join(dataDir, "devnet-treasury.json");
 const mintPath = path.join(dataDir, "devnet-stablecoin-mint.json");
-const allowedOrigins = (process.env.ALLOWED_ORIGINS || "")
+const defaultAllowedOrigins = [
+  "http://127.0.0.1:4174",
+  "http://localhost:4174",
+  "http://127.0.0.1:5173",
+  "http://localhost:5173"
+];
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || defaultAllowedOrigins.join(","))
   .split(",")
   .map((value) => value.trim())
   .filter(Boolean);
@@ -449,20 +455,28 @@ function resetDemoPayout(payoutId) {
 
 function isAllowedOrigin(origin) {
   if (!origin) return true;
-  if (allowedOrigins.length === 0) return true;
   return allowedOrigins.includes(origin);
+}
+
+function securityHeaders() {
+  return {
+    "Cache-Control": "no-store",
+    "Content-Security-Policy": "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'",
+    "Cross-Origin-Resource-Policy": "same-origin",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
+    "Referrer-Policy": "no-referrer",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY"
+  };
 }
 
 function corsHeaders(origin) {
   const headers = {
+    ...securityHeaders(),
     "Content-Type": "application/json",
     "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type"
   };
-
-  if (allowedOrigins.length === 0) {
-    return { ...headers, "Access-Control-Allow-Origin": "*" };
-  }
 
   if (origin && isAllowedOrigin(origin)) {
     return { ...headers, "Access-Control-Allow-Origin": origin, Vary: "Origin" };
@@ -553,6 +567,14 @@ function assertString(value, field) {
   return value.trim();
 }
 
+function assertLimitedString(value, field, maxLength) {
+  const text = assertString(value, field);
+  if (text.length > maxLength) {
+    throw new Error(`${field} must be ${maxLength} characters or fewer.`);
+  }
+  return text;
+}
+
 function assertNumber(value, field, options = {}) {
   if (typeof value !== "number" || Number.isNaN(value)) {
     throw new Error(`${field} must be a valid number.`);
@@ -564,6 +586,45 @@ function assertNumber(value, field, options = {}) {
     throw new Error(`${field} must be <= ${options.max}.`);
   }
   return value;
+}
+
+function assertPublicKey(value, field) {
+  const text = assertString(value, field);
+  try {
+    new PublicKey(text);
+  } catch (_error) {
+    throw new Error(`${field} must be a valid Solana public key.`);
+  }
+  return text;
+}
+
+function assertSignature(value, field) {
+  const text = assertString(value, field);
+  if (!/^[1-9A-HJ-NP-Za-km-z]{64,100}$/.test(text)) {
+    throw new Error(`${field} must be a valid Solana transaction signature.`);
+  }
+  return text;
+}
+
+function assertExplorerTxUrl(value, signature) {
+  const text = assertString(value, "explorerUrl");
+  let url;
+  try {
+    url = new URL(text);
+  } catch (_error) {
+    throw new Error("explorerUrl must be a valid URL.");
+  }
+
+  if (
+    url.protocol !== "https:" ||
+    url.hostname !== "explorer.solana.com" ||
+    url.pathname !== `/tx/${signature}` ||
+    url.searchParams.get("cluster") !== cluster
+  ) {
+    throw new Error("explorerUrl must point to the matching Solana Explorer transaction.");
+  }
+
+  return url.toString();
 }
 
 function validateQuoteRequest(payload) {
@@ -647,20 +708,22 @@ function validateStageUpdateRequest(payload) {
 }
 
 function validateSettlementReceiptRequest(payload) {
+  const signature = assertSignature(payload.signature, "signature");
+
   return {
     cluster,
-    signature: assertString(payload.signature, "signature"),
-    explorerUrl: assertString(payload.explorerUrl, "explorerUrl"),
-    payerAddress: assertString(payload.payerAddress, "payerAddress"),
-    beneficiaryAddress: assertString(payload.beneficiaryAddress, "beneficiaryAddress"),
-    amountToken: assertNumber(payload.amountToken, "amountToken", { min: 0 }),
-    assetSymbol: assertString(payload.assetSymbol, "assetSymbol"),
-    mintAddress: assertString(payload.mintAddress, "mintAddress"),
-    memoReference: assertString(payload.memoReference, "memoReference"),
-    localDeliveryId: assertString(payload.localDeliveryId, "localDeliveryId"),
-    localDeliveryMethod: assertString(payload.localDeliveryMethod, "localDeliveryMethod"),
-    offRampPartner: assertString(payload.offRampPartner, "offRampPartner"),
-    expectedEta: assertString(payload.expectedEta, "expectedEta")
+    signature,
+    explorerUrl: assertExplorerTxUrl(payload.explorerUrl, signature),
+    payerAddress: assertPublicKey(payload.payerAddress, "payerAddress"),
+    beneficiaryAddress: assertPublicKey(payload.beneficiaryAddress, "beneficiaryAddress"),
+    amountToken: assertNumber(payload.amountToken, "amountToken", { min: 0, max: 10_000 }),
+    assetSymbol: assertLimitedString(payload.assetSymbol, "assetSymbol", 16),
+    mintAddress: assertPublicKey(payload.mintAddress, "mintAddress"),
+    memoReference: assertLimitedString(payload.memoReference, "memoReference", 80),
+    localDeliveryId: assertLimitedString(payload.localDeliveryId, "localDeliveryId", 80),
+    localDeliveryMethod: assertLimitedString(payload.localDeliveryMethod, "localDeliveryMethod", 80),
+    offRampPartner: assertLimitedString(payload.offRampPartner, "offRampPartner", 120),
+    expectedEta: assertLimitedString(payload.expectedEta, "expectedEta", 120)
   };
 }
 

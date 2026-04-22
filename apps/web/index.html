@@ -3,6 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data: https:; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://127.0.0.1:8789 http://localhost:8789 http://127.0.0.1:3000 http://localhost:3000 https://api.devnet.solana.com wss://api.devnet.solana.com ws://127.0.0.1:4174 ws://localhost:4174 ws://127.0.0.1:5173 ws://localhost:5173"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>Solana-CrossBorder-Transaction-Devnet-Demo</title>
     <script type="module" src="/src/main.tsx"></script>
   </head>

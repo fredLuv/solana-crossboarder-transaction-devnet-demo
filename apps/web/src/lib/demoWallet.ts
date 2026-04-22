@@ -20,13 +20,31 @@ export type StoredDemoWallet = {
 export const DEMO_WALLET_STORAGE_KEY = "solana-crossboarder-transaction-devnet-demo.demoWallet";
 export const demoConnection = new Connection(clusterApiUrl("devnet"), "confirmed");
 
+function parseStoredDemoWallet(value: unknown): StoredDemoWallet | null {
+  if (!value || typeof value !== "object") return null;
+  const candidate = value as Partial<StoredDemoWallet>;
+  if (!candidate.address || !Array.isArray(candidate.secretKey) || candidate.secretKey.length !== 64) {
+    return null;
+  }
+
+  try {
+    const keypair = Keypair.fromSecretKey(Uint8Array.from(candidate.secretKey));
+    if (keypair.publicKey.toBase58() !== candidate.address) return null;
+  } catch (_error) {
+    return null;
+  }
+
+  return {
+    address: candidate.address,
+    secretKey: candidate.secretKey
+  };
+}
+
 export function loadStoredDemoWallet(): StoredDemoWallet | null {
   try {
     const raw = window.localStorage.getItem(DEMO_WALLET_STORAGE_KEY);
     if (!raw) return null;
-    const parsed = JSON.parse(raw) as StoredDemoWallet;
-    if (!parsed?.address || !Array.isArray(parsed.secretKey)) return null;
-    return parsed;
+    return parseStoredDemoWallet(JSON.parse(raw));
   } catch (_error) {
     return null;
   }
